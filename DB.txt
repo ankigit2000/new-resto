@@ -1,0 +1,47 @@
+CREATE TABLE Admins (
+    AdminID INT PRIMARY KEY,
+    Name VARCHAR(255) NOT NULL,
+    Email VARCHAR(255) NOT NULL,
+    Password VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE Restaurants (
+    RestaurantID INT PRIMARY KEY,
+    Name VARCHAR(255) NOT NULL,
+    Specialty VARCHAR(255) NOT NULL,
+    AdditionalFeatures VARCHAR(255) NOT NULL,
+    AdminID INT FOREIGN KEY REFERENCES Admins(AdminID)
+);
+
+CREATE TABLE Locations (
+    LocationID INT PRIMARY KEY,
+    Location VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE RestaurantSpecialties (
+    RestaurantID INT FOREIGN KEY REFERENCES Restaurants(RestaurantID),
+    SpecialtyID INT FOREIGN KEY REFERENCES Specialties(SpecialtyID)
+);
+
+CREATE TABLE Menus (
+    MenuID INT PRIMARY KEY,
+    Menu VARCHAR(255) NOT NULL
+);
+
+
+
+
+
+This creates several tables, each for a specific aspect of the restaurant details, such as location, specialties, 
+menu and additional features and uses foreign keys to link them together.
+Also, an additional table called "Admins" is added which keeps track of the different admin accounts, each admin is identified by unique AdminID, 
+and the table "Restaurants" has an additional column called 'AdminID' which is a foreign key referencing the 'AdminID' in the Admins table, 
+this way each admin is linked to the restaurants that they have access to.
+
+
+
+Yes, it is possible to build a project with .NET and Angular. .NET is a framework for building web applications and services on the Windows platform, while Angular is a JavaScript framework for building web applications. Together, they can be used to build powerful, dynamic web applications.
+
+.NET can be used to build the backend of an application, which includes the server-side logic and database interactions. Angular can be used to build the frontend of an application, which includes the user interface and client-side logic. The two frameworks can be integrated together to create a full-stack web application.
+
+It is also worth mentioning that .NET 5, which is the latest version of the .NET framework, now supports building web applications using not only the traditional .NET framework but also with gRPC, a high-performance, open-source framework for building remote procedure call (RPC) APIs and it supports many languages including JavaScript. This allows you to use Angular as the front-end framework with .NET as the back-end framework, and communicate via gRPC.
