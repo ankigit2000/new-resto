@@ -1,0 +1,102 @@
+Here is an example of how you might create a database in SQL Server Express for a restaurant with the specified tables, 
+relationships and include user, owner and role table for authentication and CRUD operations and also connect location 
+with city and state table and include Updatedby and Updateddate columns in every table:
+
+-- Creating the City table
+CREATE TABLE City (
+    CityID INT PRIMARY KEY IDENTITY(1,1),
+    CityName VARCHAR(50) NOT NULL,
+    UpdatedBy INT,
+    UpdatedDate DATETIME
+);
+
+-- Creating the State table
+CREATE TABLE State (
+    StateID INT PRIMARY KEY IDENTITY(1,1),
+    StateName VARCHAR(50) NOT NULL,
+    UpdatedBy INT,
+    UpdatedDate DATETIME
+);
+
+-- Creating the Location table
+CREATE TABLE Location (
+    LocationID INT PRIMARY KEY IDENTITY(1,1),
+    Address VARCHAR(100) NOT NULL,
+    CityID INT NOT NULL,
+    StateID INT NOT NULL,
+    UpdatedBy INT,
+    UpdatedDate DATETIME,
+    FOREIGN KEY (CityID) REFERENCES City(CityID),
+    FOREIGN KEY (StateID) REFERENCES State(StateID)
+);
+
+-- Creating the Item table
+CREATE TABLE Item (
+    ItemID INT PRIMARY KEY IDENTITY(1,1),
+    ItemName VARCHAR(50) NOT NULL,
+    ItemType VARCHAR(10) NOT NULL,
+    Price DECIMAL(10,2) NOT NULL,
+    UpdatedBy INT,
+    UpdatedDate DATETIME
+);
+
+-- Creating the Menu table
+CREATE TABLE Menu (
+    MenuID INT PRIMARY KEY IDENTITY(1,1),
+    Breakfast INT,
+    Lunch INT,
+    Dinner INT,
+    FOREIGN KEY (Breakfast) REFERENCES Item(ItemID),
+    FOREIGN KEY (Lunch) REFERENCES Item(ItemID),
+    FOREIGN KEY (Dinner) REFERENCES Item(ItemID)
+);
+
+-- Creating the User table
+CREATE TABLE User (
+    UserID INT PRIMARY KEY IDENTITY(1,1),
+    UserName VARCHAR(50) NOT NULL,
+    Password VARCHAR(50) NOT NULL,
+    RoleID INT,
+    UpdatedBy INT,
+    UpdatedDate DATETIME,
+    FOREIGN KEY (RoleID) REFERENCES Role(RoleID)
+);
+
+-- Creating the Owner table
+CREATE TABLE Owner (
+    OwnerID INT PRIMARY KEY IDENTITY(1,1),
+    OwnerName VARCHAR(50) NOT NULL,
+    UpdatedBy INT,
+    UpdatedDate DATETIME
+);
+
+-- Creating the Role table
+CREATE TABLE Role (
+    RoleID INT PRIMARY KEY IDENTITY(1,1),
+    RoleName VARCHAR(50) NOT NULL,
+    UpdatedBy INT,
+    UpdatedDate DATETIME
+);
+
+-- Creating the Restaurant table
+CREATE TABLE Restaurant (
+    RestaurantID INT PRIMARY KEY IDENTITY(1,1),
+    Name VARCHAR(50) NOT NULL,
+    Specialities VARCHAR(50) NOT NULL,
+    AdditionalFeatures VARCHAR(50) NOT NULL,
+    LocationID INT NOT NULL,
+    MenuID INT NOT NULL,
+    OwnerID INT NOT NULL,
+    UpdatedBy INT,
+    UpdatedDate DATETIME
+);
+
+You can then use the following query to filter the restaurants by location and join with the menu table to fetch the items based on itemtype and 
+also check the role table for authentication.
+
+SELECT r.Name, r.Location, m.ItemName, m.ItemType, m.Price
+FROM Restaurant r
+JOIN Menu m ON m.RestaurantId = r.Id
+JOIN Owner o ON o.RestaurantId = r.Id
+JOIN Role ro ON ro.OwnerId = o.Id
+WHERE r.Location = 'Your Location' AND m.ItemType = 'breakfast' AND ro.OwnerId = o.Id
