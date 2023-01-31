@@ -83,3 +83,55 @@ CREATE TABLE Restaurant (
     UpdatedBy INT,
     UpdatedDate DATETIME
 );
+
+// to insert data
+INSERT INTO City (CityName, UpdatedBy, UpdatedDate)
+VALUES ('New York', 1, '2023-01-31'),
+('Los Angeles', 2, '2023-01-31'),
+('Chicago', 3, '2023-01-31');
+
+-- Insert data into State table
+INSERT INTO State (StateName, UpdatedBy, UpdatedDate)
+VALUES ('New York', 1, '2023-01-31'),
+('California', 2, '2023-01-31'),
+('Illinois', 3, '2023-01-31');
+
+-- Insert data into Location table
+INSERT INTO Location (Address, CityID, StateID, UpdatedBy, UpdatedDate)
+VALUES ('123 Main St', 1, 1, 1, '2023-01-31'),
+('456 Broadway', 2, 2, 2, '2023-01-31'),
+('789 Michigan Ave', 3, 3, 3, '2023-01-31');
+
+-- Insert data into MenuType table
+INSERT INTO MenuType (MenuTypeID, Breakfast, Lunch, Dinner)
+VALUES (1, 'Pancakes', 'Salad', 'Steak'),
+(2, 'Omelet', 'Sandwich', 'Seafood'),
+(3, 'Bagel', 'Burger', 'Chicken');
+
+-- Insert data into Items table
+INSERT INTO Items (ItemID, ItemName, ItemType, MenuTypeID)
+VALUES (1, 'Pancakes with syrup', 'Breakfast', 1),
+(2, 'Salad with chicken', 'Lunch', 2),
+(3, 'Steak with mashed potatoes', 'Dinner', 3);
+
+-- Insert data into Menus table
+INSERT INTO Menus (MenuID, ItemID)
+VALUES (1, 1),
+(2, 2),
+(3, 3);
+
+-- Insert data into Role table
+INSERT INTO Role (RoleName, UpdatedBy, UpdatedDate)
+VALUES ('Admin', 1, '2023-01-31'),
+('User', 2, '2023-01-31');
+
+-- Insert data into Users table
+INSERT INTO Users (UserName, Password, RoleID, UpdatedBy, UpdatedDate)
+VALUES ('admin123', 'password123', 1, 1, '2023-01-31'),
+('user456', 'password456', 2, 2, '2023-01-31');
+
+-- Insert data into Restaurant table
+INSERT INTO Restaurant (Name, Specialities, AdditionalFeatures, LocationID, MenuID, UserID, UpdatedBy, UpdatedDate)
+VALUES ('Restaurant A', 'Italian', 'Live Music', 1, 1, 1, 1, '2023-01-31'),
+('Restaurant B', 'Mexican', 'Outdoor Seating', 2, 2, 2, 2, '2023-01-31'),
+('Restaurant C', 'American', 'Takeout', 3, 3, 3, 3, '2023-01-31');
